@@ -1,7 +1,7 @@
 // @name         imgur-proxy
 // @description  Use DuckDuckGo's proxy to load Imgur images for people in the UK
 // @author       bud3699
-// @version      1.1.0
+// @version      1.1.1
 
 (function imgurProxyExtension() {
   const duckDuckGoProxy = "https://proxy.duckduckgo.com/iu/?u=";
@@ -10,7 +10,11 @@
     const images = document.querySelectorAll("img");
     images.forEach(img => {
       const src = img.src;
-      if (src.includes("imgur.com") && !src.startsWith(duckDuckGoProxy)) {
+      if (
+        /imgur\.com/.test(src) &&
+        !src.startsWith(duckDuckGoProxy) &&
+        !decodeURIComponent(src).includes(duckDuckGoProxy)
+      ) {
         img.src = duckDuckGoProxy + encodeURIComponent(src);
       }
     });
@@ -20,7 +24,12 @@
     const allElements = document.querySelectorAll("*");
     allElements.forEach(el => {
       const bgImage = getComputedStyle(el).backgroundImage;
-      if (bgImage && bgImage.includes("imgur.com") && !bgImage.includes(duckDuckGoProxy)) {
+      if (
+        bgImage &&
+        /imgur\.com/.test(bgImage) &&
+        !bgImage.includes(duckDuckGoProxy) &&
+        !decodeURIComponent(bgImage).includes(duckDuckGoProxy)
+      ) {
         const urlMatch = bgImage.match(/url\(["']?(https?:\/\/[^"')]+)["']?\)/);
         if (urlMatch && urlMatch[1]) {
           const proxiedUrl = duckDuckGoProxy + encodeURIComponent(urlMatch[1]);
@@ -32,7 +41,13 @@
     for (const sheet of document.styleSheets) {
       try {
         for (const rule of sheet.cssRules) {
-          if (rule.style && rule.style.backgroundImage && rule.style.backgroundImage.includes("imgur.com")) {
+          if (
+            rule.style &&
+            rule.style.backgroundImage &&
+            /imgur\.com/.test(rule.style.backgroundImage) &&
+            !rule.style.backgroundImage.includes(duckDuckGoProxy) &&
+            !decodeURIComponent(rule.style.backgroundImage).includes(duckDuckGoProxy)
+          ) {
             const urlMatch = rule.style.backgroundImage.match(/url\(["']?(https?:\/\/[^"')]+)["']?\)/);
             if (urlMatch && urlMatch[1]) {
               const proxiedUrl = duckDuckGoProxy + encodeURIComponent(urlMatch[1]);
