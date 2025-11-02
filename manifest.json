@@ -1,0 +1,13 @@
+[
+  {
+    "name": "imgur-proxy",
+    "description": "Spicetify extension to proxy Imgur images through DuckDuckGo for better accessibility in the UK.",
+    "preview": "preview.png",
+    "main": "imgur-proxy.js",
+    "readme": "README.md",
+    "authors": [
+      { "name": "bud3699", "url": "https://github.com/bud3699" }
+    ],
+    "tags": ["images", "proxy", "accessibility"]
+  }
+]
