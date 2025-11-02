@@ -1,7 +1,7 @@
 // @name         imgur-proxy
 // @description  Use DuckDuckGo's proxy to load Imgur images for people in the UK
 // @author       bud3699
-// @version      1.0.0
+// @version      1.1.0
 
 (function imgurProxyExtension() {
   const duckDuckGoProxy = "https://proxy.duckduckgo.com/iu/?u=";
