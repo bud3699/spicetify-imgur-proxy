@@ -21,4 +21,4 @@ Created by bud3699
 If you find **imgur-proxy** helpful, please consider:
 
 - ⭐️ Starring the repository to show your support
-- ☕ [Buying me a coffee](https://www.buymeacoffee.com/bud3699) to show your support :)
+- ☕ [Buying me a coffee](https://www.buymeacoffee.com/bud3699) to show your support!
