@@ -21,16 +21,31 @@
   }
 
   function proxyImgurCSS() {
+    const duckDuckGoProxy = "https://proxy.duckduckgo.com/iu/?u=";
     const allElements = document.querySelectorAll("*");
     allElements.forEach(el => {
-      const bgImage = getComputedStyle(el).backgroundImage;
+      const computedBg = getComputedStyle(el).backgroundImage;
       if (
-        bgImage &&
-        /imgur\.com/.test(bgImage) &&
-        !bgImage.includes(duckDuckGoProxy) &&
-        !decodeURIComponent(bgImage).includes(duckDuckGoProxy)
+        computedBg &&
+        /imgur\.com/.test(computedBg) &&
+        !computedBg.includes(duckDuckGoProxy) &&
+        !decodeURIComponent(computedBg).includes(duckDuckGoProxy)
       ) {
-        const urlMatch = bgImage.match(/url\(["']?(https?:\/\/[^"')]+)["']?\)/);
+        const urlMatch = computedBg.match(/url\(["']?(https?:\/\/[^"')]+)["']?\)/);
+        if (urlMatch && urlMatch[1]) {
+          const proxiedUrl = duckDuckGoProxy + encodeURIComponent(urlMatch[1]);
+          el.style.backgroundImage = `url("${proxiedUrl}")`;
+        }
+      }
+
+      const inlineBg = el.style.backgroundImage;
+      if (
+        inlineBg &&
+        /imgur\.com/.test(inlineBg) &&
+        !inlineBg.includes(duckDuckGoProxy) &&
+        !decodeURIComponent(inlineBg).includes(duckDuckGoProxy)
+      ) {
+        const urlMatch = inlineBg.match(/url\(["']?(https?:\/\/[^"')]+)["']?\)/);
         if (urlMatch && urlMatch[1]) {
           const proxiedUrl = duckDuckGoProxy + encodeURIComponent(urlMatch[1]);
           el.style.backgroundImage = `url("${proxiedUrl}")`;
